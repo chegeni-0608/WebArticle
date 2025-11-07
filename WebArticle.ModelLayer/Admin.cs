@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace WebArticle.ModelLayer
 {
     [Table("T_Admin")]
-    public class Admin
+    public class Admin: BaseEntity
     {
         [Key]
         [Required]

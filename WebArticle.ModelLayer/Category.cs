@@ -11,7 +11,7 @@ namespace WebArticle.ModelLayer
 {
 
       [Table("T_Category")]
-    public class Category
+    public class Category: BaseEntity
     {
         [Key]
         [Required]

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,47 +9,88 @@ using WebArticle.ModelLayer.Context;
 
 namespace Webarticle.RepositoryLayer
 {
-    public class GenericRepository<T> : IGenericRepository<T>
+    public class GenericRepository<T> : IGenericRepository<T> where T : BaseEntity
     {
+        WebContext db;
+        DbSet<T> dbContext;
+
+        public GenericRepository(WebContext context)
+        {
+            db = context;
+            dbContext = context.Set<T>();
+        }
         
         public IEnumerable<T> GetAll()
         {
-            throw new NotImplementedException();
+          return dbContext.ToList();
         }
 
         public T GetEntity(int id)
         {
-            throw new NotImplementedException();
+            return dbContext.Find(id);
         }
 
         public bool Add(T entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                dbContext.Add(entity);
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public bool Update(T entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                db.Entry(entity).State = EntityState.Modified;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public bool Delete(T entity)
         {
-            throw new NotImplementedException();
+            try
+            {
+                db.Entry(entity).State = EntityState.Deleted;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public bool Delete(int id)
         {
-            throw new NotImplementedException();
+            try
+            {
+                T entity = GetEntity(id);
+                db.Entry(entity).State = EntityState.Deleted;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
         }
 
         public void save()
         {
-            throw new NotImplementedException();
+            db.SaveChanges();
         }
 
         public void Dispose()
         {
-            throw new NotImplementedException();
+            db.Dispose();
         }
 
        

@@ -9,7 +9,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace WebArticle.ModelLayer
 {
     [Table("T_Comment")]
-    public class Comment
+    public class Comment: BaseEntity
     {
         [Key]
         [Required]

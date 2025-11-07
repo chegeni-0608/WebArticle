@@ -4,6 +4,11 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Routing;
+//using BundleStyleAndScript.App_Start;
+using System.Web.Optimization;
+using WebArticle.App_Start;
+using WebArticle.App_Start;
+using WebArticle;
 
 namespace WebArticle
 {
@@ -13,6 +18,11 @@ namespace WebArticle
         {
             AreaRegistration.RegisterAllAreas();
             RouteConfig.RegisterRoutes(RouteTable.Routes);
+
+            BundleConfiguration.RegisterBundle(BundleTable.Bundles);
+
+            //AutoMapperConfig.Configuration();
+
         }
     }
 }
