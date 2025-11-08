@@ -21,7 +21,7 @@ namespace WebArticle
 
             BundleConfiguration.RegisterBundle(BundleTable.Bundles);
 
-            //AutoMapperConfig.Configuration();
+            AutoMapperConfig.Configuration();
 
         }
     }
