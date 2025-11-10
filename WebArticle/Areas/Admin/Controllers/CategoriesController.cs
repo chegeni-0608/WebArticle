@@ -57,16 +57,18 @@ namespace WebArticle.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CategoryId,Title,ImageName")] Category category)
+        public ActionResult Create([Bind(Include = "CategoryId,Title,ImageName")] CategoryViewModel categoryView)
         {
             if (ModelState.IsValid)
             {
+                Category category = AutoMapperConfig.mapper.Map<CategoryViewModel,Category>(categoryView);
+
                 _CategoryService.Add(category);
                 _CategoryService.save();
                 return RedirectToAction("Index");
             }
 
-            return View(category);
+            return View(categoryView);
         }
 
 

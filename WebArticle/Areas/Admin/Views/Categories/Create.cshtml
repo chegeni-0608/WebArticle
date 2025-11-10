@@ -1,19 +1,18 @@
-﻿@model WebArticle.ModelLayer.Category
+﻿@model WebArticle.Views.ViewModels.CategoryViewModel
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "درج دسته بندی";
 }
 
-<h2>Create</h2>
+<h2>فرم درج دسته بندی جدید</h2>
 
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm("Create", "Categories", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>Category</h4>
-        <hr />
+
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         <div class="form-group">
             @Html.LabelFor(model => model.Title, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -26,23 +25,33 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ImageName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ImageName, new { htmlAttributes = new { @class = "form-control" } })
+                <img src="~/images/Category/nophoto.png" class="image200×120" id="newImagePreview"><br /><br />
+                <input type="file" name="imageUpload" id="imageUpload" onchange="imagePreview(this)" value="nophoto.png" />
                 @Html.ValidationMessageFor(model => model.ImageName, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Create" class="btn btn-default" />
+                @Html.ActionLink("بازگشت به لیست", "Index", null, new { @class = "btn btn-primary" })
+                <input type="submit" value="ذخیره" class="btn btn-success" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script>
+    function imagePreview(input) {
+        if (input.files && input.files[0]) {
+            var filerdr = new FileReader();
+            filerdr.onload = function (e) {
+                jQuery('#newImagePreview').attr('src', e.target.result);
+            }
+            filerdr.readAsDataURL(input.files[0]);
+        }
+    }
+</script>
