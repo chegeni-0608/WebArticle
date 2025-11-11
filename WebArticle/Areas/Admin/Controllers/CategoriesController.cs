@@ -11,6 +11,7 @@ using WebArticle.ModelLayer.Context;
 using WebArticle.ServiceLayer;
 using WebArticle.App_Start;
 using WebArticle.Views.ViewModels;
+using System.IO;
 
 
 namespace WebArticle.Areas.Admin.Controllers
@@ -57,12 +58,30 @@ namespace WebArticle.Areas.Admin.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create([Bind(Include = "CategoryId,Title,ImageName")] CategoryViewModel categoryView)
+        public ActionResult Create([Bind(Include = "CategoryId,Title")] CategoryViewModel categoryView, HttpPostedFileBase imageUpload)
         {
             if (ModelState.IsValid)
             {
-                Category category = AutoMapperConfig.mapper.Map<CategoryViewModel,Category>(categoryView);
 
+              string newImageName = "nophoto.png";
+              if (imageUpload != null)
+                {
+                    if (imageUpload.ContentType != "image/jpeg" && imageUpload.ContentType != "image/png")
+                    {
+                        ModelState.AddModelError("imageUpload", "تصویر شما فقط باید با فرمت png یا jpg یا jpeg باشد!");
+                        return View();
+    }
+                    if (imageUpload.ContentLength > 300000)
+                    {
+                        ModelState.AddModelError("imageUpload", "سایز تصویر شما نباید بیشتر از 300 کیلوبایت باشد!");
+                        return View();
+}
+
+                         newImageName = Guid.NewGuid().ToString().Replace("-", "") + Path.GetExtension(imageUpload.FileName);
+                        imageUpload.SaveAs(Server.MapPath("~/images/Category/" + newImageName));
+                }
+                categoryView.ImageName = newImageName;
+                Category category = AutoMapperConfig.mapper.Map<CategoryViewModel,Category>(categoryView);
                 _CategoryService.Add(category);
                 _CategoryService.save();
                 return RedirectToAction("Index");
