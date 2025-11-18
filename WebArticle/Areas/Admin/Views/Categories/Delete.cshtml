@@ -1,15 +1,11 @@
-﻿@model WebArticle.ModelLayer.Category
+﻿@model WebArticle.Views.ViewModels.CategoryViewModel
 
 @{
-    ViewBag.Title = "Delete";
+    ViewBag.Title = "حذف دسته بندی";
 }
 
-<h2>Delete</h2>
 
-<h3>Are you sure you want to delete this?</h3>
 <div>
-    <h4>Category</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Title)
@@ -24,17 +20,19 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ImageName)
+            <img src="~/images/Category/@Model.ImageName" class="image200×120" id="newImagePreview">
         </dd>
 
     </dl>
 
-    @using (Html.BeginForm()) {
+    @using (Html.BeginForm())
+    {
         @Html.AntiForgeryToken()
 
         <div class="form-actions no-color">
-            <input type="submit" value="Delete" class="btn btn-default" /> |
-            @Html.ActionLink("Back to List", "Index")
+            <h4>آیا از حذف این دسته بندی مطمئن هستید؟!</h4>
+            @Html.ActionLink("بازگشت به لیست", "Index", null, new { @class = "btn btn-primary" }) |
+            <input type="submit" value="بله حذف شود!" class="btn btn-danger" />
+
         </div>
     }
-</div>

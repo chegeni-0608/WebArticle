@@ -13,5 +13,10 @@ namespace WebArticle.ServiceLayer
         public CategoryService(WebContext context) : base(context)
         {
         }
+
+        public void Save()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

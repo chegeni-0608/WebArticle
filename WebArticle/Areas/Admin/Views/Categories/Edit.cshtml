@@ -1,19 +1,19 @@
-﻿@model WebArticle.ModelLayer.Category
+﻿@model WebArticle.Views.ViewModels.CategoryViewModel
 
 @{
-    ViewBag.Title = "Edit";
+    ViewBag.Title = "ویرایش دسته بندی";
 }
 
-<h2>Edit</h2>
+<h2>فرم ویرایش دسته بندی</h2>
+<br />
+<br />
 
 
-@using (Html.BeginForm())
+@using (Html.BeginForm("Edit", "Categories", FormMethod.Post, new { enctype = "multipart/form-data" }))
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
-        <h4>Category</h4>
-        <hr />
         @Html.ValidationSummary(true, "", new { @class = "text-danger" })
         @Html.HiddenFor(model => model.CategoryId)
 
@@ -28,23 +28,27 @@
         <div class="form-group">
             @Html.LabelFor(model => model.ImageName, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ImageName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.HiddenFor(model => model.ImageName, new { htmlAttributes = new { @class = "form-control" } })
+
+                <img src="~/images/Category/@Model.ImageName" class="image200×120" id="newImagePreview"><br /><br />
+                <input type="file" name="imageUpload" id="imageUpload" onchange="imagePreview(this)" value="nophoto.png" />
+
                 @Html.ValidationMessageFor(model => model.ImageName, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
-                <input type="submit" value="Save" class="btn btn-default" />
+                @Html.ActionLink("بازگشت به لیست", "Index", null, new { @class = "btn btn-primary" })
+                <input type="submit" value="ذخیره تغییرات" class="btn btn-success" />
             </div>
         </div>
     </div>
 }
 
-<div>
-    @Html.ActionLink("Back to List", "Index")
-</div>
 
 <script src="~/Scripts/jquery-3.4.1.min.js"></script>
 <script src="~/Scripts/jquery.validate.min.js"></script>
 <script src="~/Scripts/jquery.validate.unobtrusive.min.js"></script>
+<script src="~/Scripts/site.js"></script>
+

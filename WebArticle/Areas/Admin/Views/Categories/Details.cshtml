@@ -1,14 +1,15 @@
-﻿@model WebArticle.ModelLayer.Category
+﻿@model WebArticle.Views.ViewModels.CategoryViewModel
+
 
 @{
-    ViewBag.Title = "Details";
+    ViewBag.Title = "مشاهده دسته بندی";
 }
 
-<h2>Details</h2>
+<h2>مشاهده دسته بندی</h2>
+<br />
+<br />
 
 <div>
-    <h4>Category</h4>
-    <hr />
     <dl class="dl-horizontal">
         <dt>
             @Html.DisplayNameFor(model => model.Title)
@@ -23,12 +24,14 @@
         </dt>
 
         <dd>
-            @Html.DisplayFor(model => model.ImageName)
+            <img src="~/images/Category/@Model.ImageName" class="image200×120" id="newImagePreview">
         </dd>
 
     </dl>
 </div>
 <p>
-    @Html.ActionLink("Edit", "Edit", new { id = Model.CategoryId }) |
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("بازگشت به لیست", "Index", null, new { @class = "btn btn-primary" }) |
+    @Html.ActionLink("ویرایش دسته بندی", "Edit", new { id = Model.CategoryId }, new { @class = "btn btn-warning" })
+
 </p>
+
